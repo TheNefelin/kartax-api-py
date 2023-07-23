@@ -8,6 +8,7 @@ httptools==0.6.0
 idna==3.4
 pydantic==2.0.3
 pydantic_core==2.3.0
+pymssql==2.2.7
 pyodbc==4.0.34
 python-dotenv==1.0.0
 PyYAML==6.0.1

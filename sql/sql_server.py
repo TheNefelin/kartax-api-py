@@ -1,4 +1,4 @@
-import pyodbc
+import pypyodbc
 import os
 from dotenv import load_dotenv
 
@@ -19,7 +19,7 @@ def getTesting():
 # funciones que ejecutan los procedimientos almacenados de SQL Server
 async def getData(query):
   try:
-    connection = pyodbc.connect(DB_PATH)
+    connection = pypyodbc.connect(DB_PATH)
     cursor = connection.cursor()
     cursor.execute(query)
 

@@ -12,7 +12,7 @@
 pip install virtualenv
 virtualenv env
 cd env/Scripts
-activate or .\activate
+activate or (deactivate)
 exit
 
 //this install FastApi

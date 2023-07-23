@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from sql_server import getTesting, getData
+from sql.sql_server import getTesting, getData
 
 app = FastAPI(title="Kartax", description="API", version="3.0")
 

@@ -1,0 +1,53 @@
+# Kartax API v3.0
+
+> [Deployed API](https://kartax-api-py.vercel.app/docs)
+
+* install Python 3.11.4 (PC) [page & doc](https://www.python.org/)
+* install Python plugin (vsCode) Microsoft Version
+* after deploying your app, you can use Swagger by add '/docs' on the url
+
+### installing dependency 
+```
+//for create virtual environment
+pip install virtualenv
+virtualenv env
+cd env/Scripts
+activate or .\activate
+exit
+
+//this install FastApi
+pip install fastapi
+
+//this install Uvicorn as Server
+pip install "uvicorn[standard]"
+
+//package for managing SQL Server
+pip install pyodbc==4.0.34
+
+//for creating .env file for secret data
+pip install python-dotenv 
+
+//create the requirements file
+pip freeze > requirements.txt 
+```
+
+### create .env file
+```
+BD_DRIVER="SQL Server"
+DB_HOST="host path"
+DB_DATABASE="database name"
+DB_USER="user name"
+DB_PASWORD="pasword"
+```
+
+### Deploy and run API
+```
+//run server
+uvicorn src.main:app --reload
+```
+
+### Other commands
+```
+//list of all dependency
+pip list 
+```

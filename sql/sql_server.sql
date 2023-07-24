@@ -137,3 +137,117 @@ SELECT * FROM encuesta
 --DROP TABLE pedidos_estado; 
 --DROP TABLE encuesta; 
 -- ---------------------------------------------------------------------
+--SELECT DATEADD(MINUTE, 60, token_fecha), * FROM usuario 
+
+--EXECUTE pa_usuario_registrarse 'FRANCISCO', 'CARMONA', 'flcarmonac@yahoo.com', 'NEFELIN', '123456'
+--EXECUTE pa_usuario_logearse 'NEFELIN', '123456'
+--EXECUTE pa_usuario_validar_token 'NEFELIN', 'B763FC56-32BB-4275-BD88-E53E724CD933'
+
+-- ---------------------------------------------------------------------
+-- ---------------------------------------------------------------------
+--CREATE PROCEDURE [dbo].[pa_usuario_logearse]
+--	@usuario AS VARCHAR(50),
+--	@clave AS VARCHAR(255)
+--AS
+--BEGIN
+--	SET NOCOUNT ON;
+
+--	DECLARE @id_usuario AS INT
+--	DECLARE @token AS VARCHAR(255)
+--	DECLARE @msge AS TABLE (estado BIT, msge VARCHAR(255), token VARCHAR(255))
+--	INSERT INTO @msge (estado, msge, token) VALUES (0, '', '')
+
+--	SELECT @id_usuario = id_usuario FROM usuario WHERE clave = HASHBYTES('SHA2_256', @clave) AND (usuario = @usuario OR correo = @usuario)
+
+--	IF 0 = ISNULL(@id_usuario, 0)
+--		BEGIN
+--			UPDATE @msge SET estado = 0, msge = 'Usuario o Contraseña Incorrecta', token = ''
+--		END
+--	ELSE
+--		BEGIN
+--			BEGIN TRY
+--				BEGIN TRANSACTION
+
+--				SET @token = NEWID()
+--				UPDATE usuario SET token = @token, token_fecha = GETDATE() WHERE id_usuario = @id_usuario
+
+--				COMMIT TRANSACTION
+
+--				UPDATE @msge SET estado = 1, msge = 'Sesión Iniciada Correctamente', token = @token
+--			END TRY
+--			BEGIN CATCH
+--				IF @@TRANCOUNT > 0
+--					BEGIN
+--						ROLLBACK TRANSACTION
+--					END
+
+--				UPDATE @msge SET estado = 0, msge = ERROR_MESSAGE(), token = ''
+--			END CATCH
+--		END
+
+--	SELECT estado, msge, token FROM @msge
+--END
+
+--CREATE PROCEDURE [dbo].[pa_usuario_registrarse]
+--	@nombres AS VARCHAR(255),
+--	@apellidos AS VARCHAR(255),
+--	@correo AS VARCHAR(100),
+--	@usuario AS VARCHAR(50),
+--	@clave AS VARCHAR(255)
+--AS
+--BEGIN
+--	SET NOCOUNT ON;
+
+--	DECLARE @msge AS TABLE (estado BIT, msge VARCHAR(255), id INT)
+--	INSERT INTO @msge (estado, msge, id) VALUES (0, '', 0)
+
+--	--validar que el usario no exista
+--	IF EXISTS (SELECT 1 FROM usuario WHERE usuario = @usuario OR correo = @correo) 
+--		BEGIN
+--			UPDATE @msge SET estado = 0, msge = 'El Usuario o El Correo ya Esta Registrado'
+--		END
+--	ELSE
+--		BEGIN
+--			BEGIN TRY
+--				BEGIN TRANSACTION
+
+--				-- Inserta un nuevo usuario
+--				INSERT INTO usuario (nombres, apellidos, correo, usuario, clave, fecha, token_hora_expiracion, is_active, id_rol)
+--				VALUES (@nombres, @apellidos, @correo, @usuario, HASHBYTES('SHA2_256', @clave), GETDATE(), 60, 1, 1)
+
+--				COMMIT TRANSACTION
+
+--				UPDATE @msge SET estado = 1, msge = 'Usuario Creado Correctamente', id = SCOPE_IDENTITY()
+--			END TRY
+--			BEGIN CATCH
+--				IF @@TRANCOUNT > 0
+--					BEGIN
+--						ROLLBACK TRANSACTION
+--					END
+
+--				UPDATE @msge SET estado = 0, msge = ERROR_MESSAGE(), id = 0
+--			END CATCH
+--		END
+
+--	SELECT estado, msge, id FROM @msge
+--END
+
+--CREATE PROCEDURE [dbo].[pa_usuario_validar_token]
+--	@usuario AS VARCHAR(50),
+--	@token AS VARCHAR(255)
+--AS
+--BEGIN
+--	SET NOCOUNT ON;
+
+--	DECLARE @estado AS BIT SET @estado = 0
+
+--	IF EXISTS (SELECT 1 FROM usuario WHERE token = @token AND (usuario = @usuario OR correo = @usuario))
+--		BEGIN
+--			SET @estado = 1
+--		END
+
+--	SELECT @estado
+--END
+
+-- ---------------------------------------------------------------------
+-- ---------------------------------------------------------------------

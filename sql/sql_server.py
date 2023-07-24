@@ -9,7 +9,6 @@ DB_HOST = os.getenv("DB_HOST")
 DB_DATABASE = os.getenv("DB_DATABASE")
 DB_USER = os.getenv("DB_USER")
 DB_PASWORD = os.getenv("DB_PASWORD")
-DB_PATH = "DRIVER={" + DB_DRIVER + "};SERVER=" + DB_HOST + ";DATABASE=" + DB_DATABASE + ";UID=" + DB_USER + ";PWD=" + DB_PASWORD + ";Trusted_Connection=yes"
 
 def getTesting():
   return [
@@ -19,8 +18,7 @@ def getTesting():
 # funciones que ejecutan los procedimientos almacenados de SQL Server
 async def getData(query):
   try:
-    # connection = pymssql.connect(DB_PATH)
-    connection = pymssql.connect(DB_HOST, DB_USER, DB_PASWORD)
+    connection = pymssql.connect(DB_HOST, DB_USER, DB_PASWORD, DB_DATABASE)
     cursor = connection.cursor()
     cursor.execute(query)
 

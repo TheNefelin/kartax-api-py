@@ -12,7 +12,7 @@ DB_PASWORD = os.getenv("DB_PASWORD")
 
 def getTesting():
   return [
-    { "driver": DB_DRIVER }
+    { "msge": "Kartax API v3.0", "swagger": "add '/docs' to the url", "driver": DB_DRIVER}
   ]
 
 # funciones que ejecutan los procedimientos almacenados de SQL Server

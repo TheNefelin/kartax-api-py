@@ -8,7 +8,7 @@ DB_DRIVER = os.getenv("BD_DRIVER")
 DB_HOST = os.getenv("DB_HOST")
 DB_DATABASE = os.getenv("DB_DATABASE")
 DB_USER = os.getenv("DB_USER")
-DB_PASWORD = os.getenv("DB_PASWORD")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
 
 def getTesting():
   return [
@@ -16,19 +16,23 @@ def getTesting():
   ]
 
 # funciones que ejecutan los procedimientos almacenados de SQL Server
-async def getData(query):
+async def getData(query, params):
   try:
-    connection = pymssql.connect(DB_HOST, DB_USER, DB_PASWORD, DB_DATABASE)
-    cursor = connection.cursor()
-    cursor.execute(query)
-
-    result = []
-    columns = [column[0] for column in cursor.description]
-    for row in  cursor.fetchall():
-      result.append(dict(zip(columns, row)))
-    
-    print("Connection OK")
-    return result
+    with pymssql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE) as connection:
+      with connection.cursor(as_dict=True) as cursor:
+        cursor.callproc(query, params)
+        result = cursor.fetchall()
+        return result
   except Exception as ex:
-    print("Connection Failed")
-    return [ {"ex": str(ex) } ]
+    return [{"error": str(ex)}]
+
+async def setData(query, params):
+  try:
+    with pymssql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE) as connection:
+      with connection.cursor(as_dict=True) as cursor:
+        cursor.callproc(query, params)
+        result = cursor.fetchall()
+        connection.commit()
+        return result
+  except Exception as ex:
+    return [{"error": str(ex)}]

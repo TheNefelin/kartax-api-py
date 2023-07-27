@@ -10,10 +10,8 @@
 ```
 //for create virtual environment
 pip install virtualenv
-virtualenv env
-cd env/Scripts
-activate or (deactivate)
-exit
+virtualenv -p python3 env
+.\env\Scripts\activate
 
 //this install FastApi
 pip install fastapi
@@ -22,7 +20,7 @@ pip install fastapi
 pip install "uvicorn[standard]"
 
 //package for managing SQL Server
-pip install pyodbc==4.0.34
+pip install pymssql
 
 //for creating .env file for secret data
 pip install python-dotenv 
@@ -43,6 +41,7 @@ DB_PASWORD="pasword"
 ### Deploy and run API
 ```
 //run server
+.\env\Scripts\activate
 uvicorn src.main:app --reload
 ```
 

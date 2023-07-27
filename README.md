@@ -10,7 +10,7 @@
 ```
 //for create virtual environment
 pip install virtualenv
-virtualenv -p python3 env
+virtualenv -p python3 env (if failure open PowerShell as Admin and type 'Set-ExecutionPolicy Unrestricted')
 .\env\Scripts\activate
 
 //this install FastApi

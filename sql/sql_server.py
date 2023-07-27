@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# importar variables de entorno
 DB_DRIVER = os.getenv("BD_DRIVER")
 DB_HOST = os.getenv("DB_HOST")
 DB_USER = os.getenv("DB_USER")
@@ -29,11 +30,11 @@ async def execute_query(query):
   except Exception as ex:
     return [{"error": str(ex)}]
 
-async def execute_sp(query, params):
+async def execute_sp(sp, params):
   try:
     with pymssql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE) as connection:
       with connection.cursor(as_dict=True) as cursor:
-        cursor.callproc(query, params)
+        cursor.callproc(sp, params)
         result = cursor.fetchall()
         connection.commit()
         return result

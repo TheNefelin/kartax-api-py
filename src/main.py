@@ -39,13 +39,13 @@ async def root():
 @app.get("/usuario-logearse")
 async def logearse(usuario: str, clave: str):
   query = "pa_usuario_logearse"
-  params = [usuario, clave]
+  params = (usuario, clave,)
   return await getData(query, params)
 
 @app.post("/usuario-registrarse")
-async def registrarse(prop: Registrarse):
+async def registrarse(obj: Registrarse):
   query = "pa_usuario_registrarse"
-  params = (prop.nombres, prop.apellidos, prop.usuario, prop.correo, prop.clave,)
+  params = (obj.nombres, obj.apellidos, obj.usuario, obj.correo, obj.clave,)
   return await setData(query, params)
 
 # crud --------------------------------------------------------------------

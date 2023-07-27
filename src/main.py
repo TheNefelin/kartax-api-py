@@ -1,6 +1,5 @@
+from sql.sql_server import getTesting, execute_sp, execute_query
 from fastapi import FastAPI
-from sql.sql_server import getTesting, getData, setData
-
 from pydantic import BaseModel
 from datetime import datetime
 
@@ -34,19 +33,19 @@ fechaql = datetime.strptime("20230725 15:42:00", "%Y%m%d %H:%M:%S")
 # root --------------------------------------------------------------------
 @app.get("/")
 async def root():
-  return getTesting()
+  return await getTesting();
 
 @app.get("/usuario-logearse")
 async def logearse(usuario: str, clave: str):
   query = "pa_usuario_logearse"
   params = (usuario, clave,)
-  return await getData(query, params)
+  return await execute_sp(query, params)
 
 @app.post("/usuario-registrarse")
 async def registrarse(obj: Registrarse):
   query = "pa_usuario_registrarse"
   params = (obj.nombres, obj.apellidos, obj.usuario, obj.correo, obj.clave,)
-  return await setData(query, params)
+  return await execute_sp(query, params)
 
 # crud --------------------------------------------------------------------
 #@app.get("/usuario")

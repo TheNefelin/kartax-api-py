@@ -35,7 +35,7 @@ BD_DRIVER="SQL Server"
 DB_HOST="host path"
 DB_DATABASE="database name"
 DB_USER="user name"
-DB_PASWORD="pasword"
+DB_PASSWORD="password"
 ```
 
 ### Deploy and run API

@@ -6,27 +6,30 @@ load_dotenv()
 
 DB_DRIVER = os.getenv("BD_DRIVER")
 DB_HOST = os.getenv("DB_HOST")
-DB_DATABASE = os.getenv("DB_DATABASE")
 DB_USER = os.getenv("DB_USER")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_DATABASE = os.getenv("DB_DATABASE")
 
-def getTesting():
-  return [
-    { "msge": "Kartax API v3.0", "swagger": "add '/docs' to the url", "driver": DB_DRIVER}
-  ]
+async def getTesting():
+  try:
+    version = await execute_query("SELECT SUBSTRING(@@VERSION, 1, 44)")
+    return { "msge": "Kartax API v3.0", "swagger": "add '/docs' to the url", "db": f'{version[0]} ...'}
+  except Exception as ex:
+    return [{"error": str(ex)}]
 
-# funciones que ejecutan los procedimientos almacenados de SQL Server
-async def getData(query, params):
+# funciones que ejecutan las querys y los procedimientos almacenados de SQL Server
+async def execute_query(query):
   try:
     with pymssql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE) as connection:
-      with connection.cursor(as_dict=True) as cursor:
-        cursor.callproc(query, params)
+      with connection.cursor() as cursor:
+        cursor.execute(query)
         result = cursor.fetchall()
+        connection.commit()
         return result
   except Exception as ex:
     return [{"error": str(ex)}]
 
-async def setData(query, params):
+async def execute_sp(query, params):
   try:
     with pymssql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE) as connection:
       with connection.cursor(as_dict=True) as cursor:

@@ -49,24 +49,24 @@ async def registrarse(prop: Registrarse):
   return await setData(query, params)
 
 # crud --------------------------------------------------------------------
-@app.get("/usuario")
-async def get_usuario_all():
-  query = "pa_usuario_get_all"
-  params = ()
-  return await getData(query, params)
+#@app.get("/usuario")
+#async def get_usuario_all():
+#  query = "pa_usuario_get_all"
+#  params = ()
+#  return await getData(query, params)
 
-@app.get("/usuario/{id}")
-async def get_usuario_byid(id: int):
-  return ""
+#@app.get("/usuario/{id}")
+#async def get_usuario_byid(id: int):
+#  return ""
 
-@app.post("/usuario")
-async def post_usuario_byid(props: Usuario):
-  return Usuario
+#@app.post("/usuario")
+#async def post_usuario_byid(props: Usuario):
+#  return Usuario
 
-@app.put("/usuario")
-async def put_usuario_byid(props: Usuario):
-  return Usuario
+#@app.put("/usuario")
+#async def put_usuario_byid(props: Usuario):
+#  return Usuario
 
-@app.delete("/usuario/{id}")
-async def del_usuario_byid(id: int):
-  return Usuario
+#@app.delete("/usuario/{id}")
+#async def del_usuario_byid(id: int):
+#  return Usuario

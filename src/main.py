@@ -6,9 +6,6 @@ from routers import usuarios
 
 app = FastAPI(title="Kartax", description="API", version="3.0")
 
-# routers -----------------------------------------------------------------
-app.include_router(usuarios.router)
-
 # modelo ------------------------------------------------------------------
 class Registrarse(BaseModel):
   nombres: str
@@ -20,17 +17,19 @@ class Registrarse(BaseModel):
 fechaql = datetime.strptime("20230725 15:42:00", "%Y%m%d %H:%M:%S")
 
 # root --------------------------------------------------------------------
-@app.get("/")
+@app.get("/", tags=["root"])
 async def root():
   return await getTesting()
 
-@app.get("/usuario-logearse")
+@app.get("/usuario-logearse", tags=["root"])
 async def logearse(usuario: str, clave: str):
   result = await execute_sp("pa_usuario_logearse", (usuario, clave,))
   return result
 
-@app.post("/usuario-registrarse")
+@app.post("/usuario-registrarse", tags=["root"])
 async def registrarse(obj: Registrarse):
   result = await execute_sp("pa_usuario_registrarse", (obj.nombres, obj.apellidos, obj.usuario, obj.correo, obj.clave,))
   return result
 
+# routers -----------------------------------------------------------------
+app.include_router(usuarios.router)

@@ -1,4 +1,4 @@
-from sql.sql_server import getTesting, execute_sp
+from sql.sql_server import execute_sp
 from fastapi import APIRouter
 from pydantic import BaseModel
 from datetime import datetime

@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from datetime import datetime
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import usuarios
+from routers import negocios, usuarios
 
 app = FastAPI(title="Kartax", description="API", version="3.0")
 
@@ -52,4 +52,5 @@ async def logearse(obj: Logearse):
   return result
 
 # routers -----------------------------------------------------------------
+app.include_router(negocios.router)
 app.include_router(usuarios.router)

@@ -147,6 +147,7 @@ SELECT * FROM encuesta
 EXECUTE pa_usuario_logearse 'NEFELIN', '123456'
 --EXECUTE pa_usuario_registrarse 'FRANCISCO', 'CARMONA', 'flcarmonac@yahoo.com', 'NEFELIN', '123456'
 EXECUTE pa_usuario_validar_token 'NEFELIN', 'E9046888-61F8-464A-B258-3511CDCCAC2B'
+EXECUTE pa_negocio_getall
 
 -- SP Private --------------------------------
 EXECUTE pa_usuario_get_all 'NEFELIN', ''

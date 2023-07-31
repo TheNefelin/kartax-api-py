@@ -2,8 +2,10 @@ from sql.sql_server import getTesting, execute_sp
 from pydantic import BaseModel
 from datetime import datetime
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware #cors handler class
+from fastapi.staticfiles import StaticFiles #img handler class
 from routers import negocios, usuarios
+
 
 app = FastAPI(title="Kartax", description="API", version="3.0")
 
@@ -51,6 +53,8 @@ async def logearse(obj: Logearse):
   result = await execute_sp("pa_usuario_logearse", (obj.usuario, obj.clave,))
   return result
 
+
 # routers -----------------------------------------------------------------
 app.include_router(negocios.router)
 app.include_router(usuarios.router)
+app.mount("/static", StaticFiles(directory="static"), name="static")

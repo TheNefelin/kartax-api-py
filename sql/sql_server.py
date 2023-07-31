@@ -28,7 +28,7 @@ async def execute_query(query):
         connection.commit()
         return result
   except Exception as ex:
-    return [{"error": str(ex)}]
+    return [{"estado": False, "error": str(ex)}]
 
 async def execute_sp(sp, params):
   try:
@@ -39,4 +39,4 @@ async def execute_sp(sp, params):
         connection.commit()
         return result
   except Exception as ex:
-    return [{"error": str(ex)}]
+    return [{"estado": False, "error": str(ex)}]

@@ -25,6 +25,9 @@ pip install pymssql
 //for creating .env file for secret data
 pip install python-dotenv 
 
+//for form data sending user password on OAuth2
+pip install python-multipart 
+
 //create the requirements file
 pip freeze > requirements.txt 
 ```

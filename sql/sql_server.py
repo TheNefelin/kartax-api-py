@@ -14,7 +14,7 @@ DB_DATABASE = os.getenv("DB_DATABASE")
 async def getTesting():
   try:
     version = await execute_query("SELECT SUBSTRING(@@VERSION, 1, 44)")
-    return { "msge": "Kartax API v3.0", "swagger": "add '/docs' to the url", "db": f'{version[0]} ...'}
+    return [{ "msge": "Kartax API v3.0", "swagger": "add '/docs' to the url", "db": f'{version[0]} ...'}]
   except Exception as ex:
     return [{"error": str(ex)}]
 

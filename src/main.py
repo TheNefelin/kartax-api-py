@@ -60,7 +60,7 @@ async def iniciar_sesion(form: OAuth2PasswordRequestForm = Depends()):
       detail = msge,
       headers={"WWW-Authenticate": "Bearer"},)
 
-  return {"access_token": f"{form.username}={sql_token}", "token_type": "bearer", "msge": msge}
+  return {"access_token": sql_token, "token_type": "bearer", "msge": msge}
 
 @app.get("/token", tags=["root"])
 async def get_token(token: str = Depends(oauth2_scheme)):

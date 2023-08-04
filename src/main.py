@@ -5,7 +5,7 @@ from fastapi import FastAPI, HTTPException, status, Depends
 from fastapi.middleware.cors import CORSMiddleware #cors handler class
 from fastapi.staticfiles import StaticFiles #img handler class
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from routers import negocios, usuarios
+from routers import clientes, usuarios
 
 app = FastAPI(title="Kartax", description="API", version="3.0")
 
@@ -47,6 +47,15 @@ async def root():
 @app.post("/usuario-registrarse", tags=["root"])
 async def registrarse(obj: Registrarse):
   result = await execute_sp("pa_usuario_registrarse", (obj.nombres, obj.apellidos, obj.usuario, obj.correo, obj.clave,))
+  estado, msge = result[0]['estado'], result[0]['msge']
+
+  if not estado:
+    raise HTTPException(
+      status_code = status.HTTP_400_BAD_REQUEST,
+      detail = msge,
+      headers={"WWW-Authenticate": "Bearer"},
+    )
+
   return result
 
 @app.post("/usuario-logearse", tags=["root"])
@@ -58,7 +67,8 @@ async def iniciar_sesion(form: OAuth2PasswordRequestForm = Depends()):
     raise HTTPException(
       status_code = status.HTTP_401_UNAUTHORIZED, 
       detail = msge,
-      headers={"WWW-Authenticate": "Bearer"},)
+      headers={"WWW-Authenticate": "Bearer"},
+    )
 
   return {"access_token": sql_token, "token_type": "bearer", "msge": msge}
 
@@ -68,6 +78,6 @@ async def get_token(token: str = Depends(oauth2_scheme)):
    return {"token": token}
 
 # routers -----------------------------------------------------------------
-app.include_router(negocios.router, dependencies=[Depends(oauth2_scheme)])
+app.include_router(clientes.router, dependencies=[Depends(oauth2_scheme)])
 app.include_router(usuarios.router)
 app.mount("/static", StaticFiles(directory="static"), name="static")

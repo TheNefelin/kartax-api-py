@@ -1,7 +1,7 @@
 from sql.sql_server import execute_sp
 from fastapi import APIRouter
 
-router = APIRouter(prefix="/negocio", tags=["negocios"])
+router = APIRouter(prefix="/cliente", tags=["clientes"])
 
 @router.get("/")
 async def get_negocio_all():

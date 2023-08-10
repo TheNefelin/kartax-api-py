@@ -61,7 +61,7 @@ async def registrarse(obj: Registrarse):
 @app.post("/usuario-logearse", tags=["root"])
 async def iniciar_sesion(form: OAuth2PasswordRequestForm = Depends()):
   result = await execute_sp("pa_usuario_logearse", (form.username, form.password,))
-  estado, msge, sql_token = result[0]['estado'], result[0]['msge'], result[0]['sql_token']
+  estado, msge = result[0]['estado'], result[0]['msge']
 
   if not estado:
     raise HTTPException(
@@ -69,8 +69,10 @@ async def iniciar_sesion(form: OAuth2PasswordRequestForm = Depends()):
       detail = msge,
       headers={"WWW-Authenticate": "Bearer"},
     )
+  
+  sql_token, nombres, apellidos, correo, rol = result[0]['sql_token'], result[0]['nombres'], result[0]['apellidos'], result[0]['correo'], result[0]['rol']
 
-  return {"access_token": sql_token, "token_type": "bearer", "msge": msge, "nombre": "PRUEBA"}
+  return {"access_token": sql_token, "token_type": "bearer", "msge": msge, "nombres": nombres, "apellidos": apellidos, "correo": correo, "rol": rol }
 
 @app.get("/token", tags=["root"])
 async def get_token(token: str = Depends(oauth2_scheme)):

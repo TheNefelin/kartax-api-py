@@ -80,6 +80,6 @@ async def get_token(token: str = Depends(oauth2_scheme)):
    return {"token": token}
 
 # routers -----------------------------------------------------------------
-app.include_router(clientes.router, dependencies=[Depends(oauth2_scheme)])
-app.include_router(usuarios.router)
+app.include_router(clientes.router)
+app.include_router(usuarios.router, dependencies=[Depends(oauth2_scheme)])
 app.mount("/static", StaticFiles(directory="static"), name="static")

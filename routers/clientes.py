@@ -9,6 +9,6 @@ async def get_negocio_all():
   return result
 
 @router.get("/{id}")
-async def get_usuario_byid(id: int):
+async def get_negocio_byid(id: int):
   result = await execute_sp("pa_negocio_getbyid", (id,))
   return result

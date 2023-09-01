@@ -5,7 +5,7 @@ from fastapi import FastAPI, HTTPException, status, Depends
 from fastapi.middleware.cors import CORSMiddleware #cors handler class
 from fastapi.staticfiles import StaticFiles #img handler class
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from routers import clientes, usuarios
+from routers import negocios, clientes, usuarios
 
 app = FastAPI(title="Kartax", description="API", version="3.0")
 
@@ -81,5 +81,6 @@ async def get_token(token: str = Depends(oauth2_scheme)):
 
 # routers -----------------------------------------------------------------
 app.include_router(clientes.router)
+app.include_router(negocios.router)
 app.include_router(usuarios.router, dependencies=[Depends(oauth2_scheme)])
 app.mount("/static", StaticFiles(directory="static"), name="static")

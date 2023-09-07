@@ -146,18 +146,25 @@ SELECT * FROM encuesta
 -- SP Public ---------------------------------
 EXECUTE pa_usuario_logearse 'NEFELIN', '123456'
 --EXECUTE pa_usuario_registrarse 'FRANCISCO', 'CARMONA', 'flcarmonac@yahoo.com', 'NEFELIN', '123456'
-EXECUTE pa_usuario_validar 'NEFELIN', 'CD75EF92-ED3A-4D98-9004-EEAB038089FF'
+EXECUTE pa_usuario_validar 'NEFELIN', '5A95E39C-AA20-4A94-96AD-1ECAFD090FBC'
 
 EXECUTE pa_negocio_get
 EXECUTE pa_negocio_get_byid 1
 EXECUTE pa_negocio_get_byid_usuario 1
 
+EXECUTE pa_item_grp_get_byid 1
+EXECUTE pa_item_grp_get_byid_negocio 1
+
+EXECUTE pa_item_categ_get_byid 1
+EXECUTE pa_item_categ_get_byid_grp 1
+
+EXECUTE pa_item_get_byid 1
+EXECUTE pa_item_get_byid_categ 1
+
+-- SP Private --------------------------------
 DECLARE @id AS INT
 SET @id = (SELECT id_usuario FROM kartax_usuario WHERE (correo = 'NEFELIN' OR usuario = 'NEFELIN') AND sql_token = '5A95E39C-AA20-4A94-96AD-1ECAFD090FBC')
 SELECT ISNULL(@id, 0)
-
--- SP Private --------------------------------
-
 
 
 

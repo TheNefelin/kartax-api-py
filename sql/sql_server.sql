@@ -16,7 +16,7 @@
 --INSERT INTO negocio
 -- 	(nombre, rut, direccion, descripcion, logo, is_active)
 --VALUES
--- 	('Kartax', '00.000.000-0', 'Viña del Mar', 'Demo', '/img/kartax/logo.ico', 1);
+-- 	('Kartax', '00.000.000-0', 'Viï¿½a del Mar', 'Demo', '/img/kartax/logo.ico', 1);
 
 --INSERT INTO usuario_negocio 
 -- 	(id_usuario, id_negocio, fecha)
@@ -60,7 +60,7 @@
 -- 	('Tabla de Carne', 'nace de lupulo y cebada, y vive en una botella encerrada, puede ser morena o dorada, puede ser de trigo o cereza, para ser sincero sin rodeo digo, buena amiga es la cerveza"', 7000, '/img/kartax/item_09.png', 1, 3),
 -- 	('Tabla de Queso', 'nace de lupulo y cebada, y vive en una botella encerrada, puede ser morena o dorada, puede ser de trigo o cereza, para ser sincero sin rodeo digo, buena amiga es la cerveza"', 7000, '/img/kartax/item_10.png', 1, 3),
 -- 	('Tabla Veggie', 'nace de lupulo y cebada, y vive en una botella encerrada, puede ser morena o dorada, puede ser de trigo o cereza, para ser sincero sin rodeo digo, buena amiga es la cerveza"', 7000, '/img/kartax/item_11.png', 1, 3),
--- 	('Papas Rústicas', 'nace de lupulo y cebada, y vive en una botella encerrada, puede ser morena o dorada, puede ser de trigo o cereza, para ser sincero sin rodeo digo, buena amiga es la cerveza"', 5000, '/img/kartax/item_12.png', 1, 3),
+-- 	('Papas Rï¿½sticas', 'nace de lupulo y cebada, y vive en una botella encerrada, puede ser morena o dorada, puede ser de trigo o cereza, para ser sincero sin rodeo digo, buena amiga es la cerveza"', 5000, '/img/kartax/item_12.png', 1, 3),
 -- 	('Papas Merken', 'nace de lupulo y cebada, y vive en una botella encerrada, puede ser morena o dorada, puede ser de trigo o cereza, para ser sincero sin rodeo digo, buena amiga es la cerveza"', 5000, '/img/kartax/item_13.png', 1, 3),
 -- 	('Papas Cheddar', 'nace de lupulo y cebada, y vive en una botella encerrada, puede ser morena o dorada, puede ser de trigo o cereza, para ser sincero sin rodeo digo, buena amiga es la cerveza"', 6000, '/img/kartax/item_14.png', 1, 3),
 -- 	('Hamburguesa de Res', 'nace de lupulo y cebada, y vive en una botella encerrada, puede ser morena o dorada, puede ser de trigo o cereza, para ser sincero sin rodeo digo, buena amiga es la cerveza"', 6000, '/img/kartax/item_15.png', 1, 4),
@@ -144,9 +144,9 @@ SELECT * FROM encuesta
 --SELECT DATEADD(MINUTE, 60, token_fecha), * FROM usuario 
 
 -- SP Public ---------------------------------
-EXECUTE pa_usuario_logearse 'NEFELIN', '123456'
---EXECUTE pa_usuario_registrarse 'FRANCISCO', 'CARMONA', 'flcarmonac@yahoo.com', 'NEFELIN', '123456'
-EXECUTE pa_usuario_validar 'NEFELIN', '5A95E39C-AA20-4A94-96AD-1ECAFD090FBC'
+EXECUTE pa_usuario_logearse 'NEFELIN', 'SECRET-KEY'
+--EXECUTE pa_usuario_registrarse 'FRANCISCO', 'CARMONA', 'flcarmonac@yahoo.com', 'NEFELIN', 'SECRET-KEY'
+EXECUTE pa_usuario_validar 'NEFELIN', 'SECRET-TOKEN'
 
 EXECUTE pa_negocio_get
 EXECUTE pa_negocio_get_byid 1
@@ -165,7 +165,7 @@ EXECUTE pa_item_get_byid_negocio 1
 
 -- SP Private --------------------------------
 DECLARE @id AS INT
-SET @id = (SELECT id_usuario FROM kartax_usuario WHERE (correo = 'NEFELIN' OR usuario = 'NEFELIN') AND sql_token = '5A95E39C-AA20-4A94-96AD-1ECAFD090FBC')
+SET @id = (SELECT id_usuario FROM kartax_usuario WHERE (correo = 'NEFELIN' OR usuario = 'NEFELIN') AND sql_token = 'SECRET-TOKEN')
 SELECT ISNULL(@id, 0)
 
 

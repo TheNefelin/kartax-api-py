@@ -157,9 +157,11 @@ EXECUTE pa_item_grp_get_byid_negocio 1
 
 EXECUTE pa_item_categ_get_byid 1
 EXECUTE pa_item_categ_get_byid_grp 1
+EXECUTE pa_item_categ_get_byid_negocio 1
 
 EXECUTE pa_item_get_byid 1
 EXECUTE pa_item_get_byid_categ 1
+EXECUTE pa_item_get_byid_negocio 1
 
 -- SP Private --------------------------------
 DECLARE @id AS INT

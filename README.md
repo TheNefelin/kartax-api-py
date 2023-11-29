@@ -51,5 +51,8 @@ uvicorn src.main:app --reload
 ### Other commands
 ```
 //list of all dependency
-pip list 
+pip list
+
+//install all dependency from requirements.txt
+pip install -r requirements.txt
 ```
